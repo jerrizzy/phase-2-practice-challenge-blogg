@@ -1,13 +1,18 @@
 import React from "react";
 
-function Header() {
+function Header({search, setSearch}) {
+
+  function handleSearch (e) {
+    setSearch(e.target.value)
+  }
+  
   return (
     <div>
       <header className="logo">
         <h1>the bLOGg</h1>
 
         {/* This is the search box */}
-        <input
+        <input onChange={handleSearch}
           style={{
             width: "500px",
             height: "20px",
@@ -18,7 +23,7 @@ function Header() {
             color: "white",
           }}
           placeholder="Search an article or the author"
-          type="text"
+          type="text" value={search}
         ></input>
       </header>
     </div>

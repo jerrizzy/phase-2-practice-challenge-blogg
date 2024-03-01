@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 
 function BlogPost({ blog }) {
+
+  const [isRead, setIsRead] = useState(blog.isRead)
+
+  function handleClick(){
+    fetch("http://localhost:4000/blogs/"+ blog.id, {
+    method: "PATCH",
+    headers: {"content-type" : "Application/json",},
+    body: JSON.stringify({isRead: !isRead}),
+  })
+
+  .then((resp) => resp.json())
+  .then((data) => setIsRead(data.isRead))
+  }
+
   return (
     <div className="post-container">
       <div className="post-header">
         <div className="head">
-          <h3>{/* Replace this with the title*/}</h3>
-          <button className="read-button">Read</button>
+          <h3>{blog.title}</h3>
+          <button onClick={handleClick} className="read-button">{isRead ? "Read" : "Unread"}</button>
           {/* Conditionally change the button text on click from Read to Unread and vice-versa */}
         </div>
-        <p>Author {/* Replace this with the author name*/}</p>
+        <p>Author: {blog.author}</p>
       </div>
 
       <p>
